@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Employee {
+  id           Int          @id @default(autoincrement())
+  name         String
+  role         EmployeeRole //To classify teacher ,professor or staff
+  qrCodeId     String       @unique //for qr scan //No two employees can have the same QR code.
+  salaryAmount Int
+  email        String?      @unique
+  createdAt    DateTime     @default(now())
+  payments     Payment[] //an employee has many payments
+}
+
+model Payment {
+  id         Int           @id @default(autoincrement())
+  employee   Employee      @relation(fields: [employeeId], references: [id]) //one payment must have one employee
+  employeeId Int
+  amount     Int
+  month      Int
+  year       Int
+  status     PaymentStatus @default(UNPAID) //paid,unpaid
+  method     String? // e.g., "BANK_TRANSFER", "CASH"
+  paidAt     DateTime?
+
+  @@unique([employeeId, month, year]) //an employee can't have two payments for the same month
+  @@index([employeeId, month, year]) //add index for faster queries
+}
+
+enum EmployeeRole {
+  TEACHER
+  PROFESSOR
+  STAFF
+  ADMIN
+}
+
+enum PaymentStatus {
+  PAID
+  UNPAID
+}
+
+// npx prisma init (create prisma schema folder)
+// npx prisma generate 
+// npx prisma db push(add db to postgresql)
+// npx prisma migrate dev --name 'added employee and payment table' (for updating)
+// npx prisma studio (prisma orm UI)

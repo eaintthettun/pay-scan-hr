@@ -12,12 +12,13 @@ import {
   HiClock,
   HiCurrencyDollar,
   HiInbox,
+  HiOfficeBuilding,
   HiQrcode,
   HiTable,
   HiUsers,
 } from "react-icons/hi";
 import logo from "../photos/icons/logo.svg";
-import { HiUser } from "react-icons/hi2";
+import { Link } from "react-router-dom";
 
 export default function SidebarComponent() {
   return (
@@ -33,35 +34,50 @@ export default function SidebarComponent() {
                 </span>
               </div>
             </SidebarItem>
-            <SidebarItem href="#" icon={HiChartPie} className="mt-5">
-              Dashboard
-            </SidebarItem>
-            <SidebarCollapse icon={HiUser} label="Department">
-              <SidebarItem href="#" icon={HiAcademicCap}>
-                Teachers
+
+            {/* Dashboard */}
+            <Link to="/">
+              <SidebarItem icon={HiChartPie} className="mt-5">
+                Dashboard
               </SidebarItem>
-              <SidebarItem href="#" icon={HiUsers}>
-                Staff
-              </SidebarItem>
+            </Link>
+
+            {/* Department */}
+            <SidebarCollapse icon={HiOfficeBuilding} label="Department">
+              <Link to="/teachers">
+                <SidebarItem icon={HiAcademicCap}>Teachers</SidebarItem>
+              </Link>
+              <Link to="/staff" className="block">
+                <SidebarItem icon={HiUsers}>Staff</SidebarItem>
+              </Link>
             </SidebarCollapse>
-            <SidebarItem href="#" icon={HiCurrencyDollar}>
-              Payments History
-            </SidebarItem>
-            <SidebarItem href="#" icon={HiInbox}>
-              Inbox
-            </SidebarItem>
-            <SidebarItem href="#" icon={HiQrcode}>
-              Last 5 QR Scans
-            </SidebarItem>
-            <SidebarItem href="#" icon={HiClock}>
-              Recent activity
-            </SidebarItem>
-            <SidebarItem href="#" icon={HiArrowSmRight}>
-              Sign In
-            </SidebarItem>
-            <SidebarItem href="#" icon={HiTable}>
-              Sign Up
-            </SidebarItem>
+
+            {/* Payment History */}
+            <Link to="/payments">
+              <SidebarItem icon={HiCurrencyDollar}>
+                Payments History
+              </SidebarItem>
+            </Link>
+
+            {/* Inbox */}
+            <Link to="/inbox">
+              <SidebarItem icon={HiInbox}>Inbox</SidebarItem>
+            </Link>
+
+            <Link to="/lastFiveScans">
+              <SidebarItem icon={HiQrcode}>Last 5 QR scans</SidebarItem>
+            </Link>
+
+            <Link to="/activities">
+              <SidebarItem icon={HiClock}>Activity log</SidebarItem>
+            </Link>
+
+            <Link to="/signin">
+              <SidebarItem icon={HiArrowSmRight}>Sign in</SidebarItem>
+            </Link>
+            <Link to="/signup">
+              <SidebarItem icon={HiTable}>Sign up</SidebarItem>
+            </Link>
           </SidebarItemGroup>
         </SidebarItems>
       </Sidebar>
