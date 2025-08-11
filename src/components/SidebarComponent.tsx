@@ -29,7 +29,7 @@ export default function SidebarComponent() {
             <SidebarItem href="/">
               <div className="flex items-center justify-evenly gap-2.5">
                 <img src={logo} alt="Logo" className="h-[40px] w-[40px]" />
-                <span className="text-2xl font-bold text-orange-600">
+                <span className="text-2xl font-bold text-slate-900">
                   PayScan HR
                 </span>
               </div>
